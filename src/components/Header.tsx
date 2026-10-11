@@ -42,15 +42,22 @@ export function Header() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-white/90 backdrop-blur-md shadow-sm py-2" : "bg-transparent py-4"
+          scrolled && !open ? "bg-white/90 backdrop-blur-md shadow-sm py-2" : scrolled ? "bg-transparent py-2" : "bg-transparent py-4"
         }`}
       >
         <div className="mx-auto max-w-7xl px-6 flex items-center justify-between">
           <button
             onClick={() => scrollTo("hero")}
-            className="font-bold text-xl tracking-tight text-brand-graphite"
+            aria-label="ProtecSeg - voltar ao início"
+            className="relative z-50 shrink-0"
           >
-            <span className="text-brand-green">Protec</span>Seg
+            <img
+              src={open ? "/logo-protecseg-reverse.png" : "/logo-protecseg-color.png"}
+              alt="ProtecSeg Segurança do Trabalho"
+              width={115}
+              height={64}
+              className={`w-auto transition-all duration-300 ${scrolled ? "h-12" : "h-16"}`}
+            />
           </button>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -86,7 +93,7 @@ export function Header() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-brand-graphite"
+            className={`relative z-50 md:hidden p-2 ${open ? "text-white" : "text-brand-graphite"}`}
             aria-label={open ? "Fechar menu" : "Abrir menu"}
           >
             {open ? <X size={26} /> : <Menu size={26} />}

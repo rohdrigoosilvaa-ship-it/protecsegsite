@@ -21,9 +21,14 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           <div>
-            <p className="text-2xl font-bold">
-              <span className="text-brand-green">Protec</span>Seg
-            </p>
+            <img
+              src="/logo-protecseg-reverse.png"
+              alt="ProtecSeg Segurança do Trabalho"
+              width={212}
+              height={118}
+              loading="lazy"
+              className="h-[118px] w-auto"
+            />
             <p className="mt-4 text-sm text-brand-gray-300 max-w-xs">
               Consultoria em Segurança do Trabalho com tecnologia para prevenção contínua.
             </p>
