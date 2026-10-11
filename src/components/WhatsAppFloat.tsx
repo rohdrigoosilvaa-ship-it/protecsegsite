@@ -1,10 +1,10 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { CONTACT } from "../lib/content";
 
 export function WhatsAppFloat() {
   return (
-    <motion.a
+    <m.a
       href={`https://wa.me/${CONTACT.whatsapp}`}
       target="_blank"
       rel="noopener noreferrer"
@@ -17,6 +17,6 @@ export function WhatsAppFloat() {
       className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg animate-pulse-ring"
     >
       <MessageCircle size={28} fill="white" />
-    </motion.a>
+    </m.a>
   );
 }

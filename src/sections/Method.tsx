@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Reveal } from "../components/Reveal";
 import { METHOD } from "../lib/content";
 
@@ -13,7 +13,7 @@ export function Method() {
 
         <div className="relative mt-20">
           <div className="hidden md:block absolute top-8 left-[12%] right-[12%] h-px">
-            <motion.div
+            <m.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
@@ -24,7 +24,7 @@ export function Method() {
 
           <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
             {METHOD.steps.map((step, i) => (
-              <motion.div
+              <m.div
                 key={step.number}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -32,15 +32,15 @@ export function Method() {
                 transition={{ duration: 0.6, delay: i * 0.15 }}
                 className="relative text-center"
               >
-                <motion.div
+                <m.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   className="relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-green text-lg font-bold text-white shadow-lg shadow-brand-green/30"
                 >
                   {step.number}
-                </motion.div>
+                </m.div>
                 <h3 className="mt-5 font-semibold text-brand-graphite">{step.title}</h3>
                 <p className="mt-2 text-sm text-brand-gray-700">{step.description}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>

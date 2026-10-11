@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --color-brand-green: #00a759;
   --color-brand-green-dark: #008a49;
@@ -17,7 +17,13 @@
 
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   --animate-fade-in: fade-in 0.6s ease forwards;
-  --animate-float: float 6s ease-in-out infinite;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-drift-reverse: drift 11s ease-in-out infinite reverse;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-spin-slower: spin 55s linear infinite reverse;
+  --animate-bob: bob 2s ease-in-out infinite;
+  --animate-sweep: sweep 14s ease-in-out infinite;
   --animate-pulse-ring: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-marquee: marquee 28s linear infinite;
 
@@ -39,6 +45,18 @@
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-14px); }
   }
+  @keyframes drift {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(14px, -20px, 0); }
+  }
+  @keyframes bob {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 8px); }
+  }
+  @keyframes sweep {
+    0%, 100% { transform: translate3d(-20%, 0, 0); }
+    50% { transform: translate3d(20%, 0, 0); }
+  }
   @keyframes pulse-ring {
     0% { box-shadow: 0 0 0 0 rgba(0, 167, 89, 0.45); }
     70% { box-shadow: 0 0 0 14px rgba(0, 167, 89, 0); }
@@ -53,6 +71,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+  section[id] {
+    scroll-margin-top: 72px;
   }
   body {
     @apply bg-white text-brand-graphite antialiased;
@@ -71,6 +92,23 @@
   .gradient-green {
     background: linear-gradient(135deg, #00a759 0%, #00c96c 100%);
   }
+}
+
+.hero-enter {
+  opacity: 0;
+  animation: hero-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-enter-scale {
+  opacity: 0;
+  animation: hero-scale 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hero-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-scale {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {

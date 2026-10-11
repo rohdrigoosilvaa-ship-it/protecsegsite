@@ -1,4 +1,4 @@
-import { motion, type Variants } from "framer-motion";
+import { m, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 type Direction = "up" | "left" | "right" | "none";
@@ -36,7 +36,7 @@ export function Reveal({
   };
 
   return (
-    <motion.div
+    <m.div
       className={className}
       initial="hidden"
       whileInView="visible"
@@ -44,7 +44,7 @@ export function Reveal({
       variants={variants}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -60,7 +60,7 @@ export function StaggerGroup({
   once?: boolean;
 }) {
   return (
-    <motion.div
+    <m.div
       className={className}
       initial="hidden"
       whileInView="visible"
@@ -71,7 +71,7 @@ export function StaggerGroup({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -85,7 +85,7 @@ export function StaggerItem({
   direction?: Direction;
 }) {
   return (
-    <motion.div
+    <m.div
       className={className}
       variants={{
         hidden: { opacity: 0, ...offsets[direction] },
@@ -98,6 +98,6 @@ export function StaggerItem({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

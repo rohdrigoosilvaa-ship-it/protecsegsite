@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { useRef } from "react";
 import { BarChart3, Bell, FileCheck2, Smartphone } from "lucide-react";
 import { Reveal, StaggerGroup, StaggerItem } from "../components/Reveal";
@@ -63,7 +63,7 @@ export function ProtecsegDigital() {
           </Reveal>
 
           <Reveal direction="right" delay={0.1}>
-            <motion.div
+            <m.div
               whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
               className="rounded-2xl border border-brand-gray-100 bg-brand-gray-50 p-6 shadow-2xl shadow-brand-graphite/10 md:p-8"
@@ -78,7 +78,7 @@ export function ProtecsegDigital() {
                   <AnimatedPercentage target={DIGITAL.dashboard.percentage} />
                 </p>
                 <div className="mb-2 h-3 flex-1 overflow-hidden rounded-full bg-brand-gray-100">
-                  <motion.div
+                  <m.div
                     initial={{ width: 0 }}
                     whileInView={{ width: `${DIGITAL.dashboard.percentage}%` }}
                     viewport={{ once: true }}
@@ -96,7 +96,7 @@ export function ProtecsegDigital() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           </Reveal>
         </div>
       </div>

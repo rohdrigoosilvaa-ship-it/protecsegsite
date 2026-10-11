@@ -1,35 +1,38 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState, type FormEvent } from "react";
+import { AnimatePresence, m } from "framer-motion";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { Reveal } from "../components/Reveal";
 import { CONTACT, FINAL_CTA } from "../lib/content";
 
-const schema = z.object({
-  name: z.string().min(2, "Informe seu nome"),
-  email: z.string().email("E-mail inválido"),
-  phone: z.string().min(8, "Informe um telefone"),
-  company: z.string().optional(),
-  message: z.string().min(5, "Escreva uma mensagem"),
-});
+type Field = "name" | "email" | "phone" | "company" | "message";
+type Errors = Partial<Record<Field, string>>;
 
-type FormData = z.infer<typeof schema>;
+function validate(d: Record<Field, string>): Errors {
+  const e: Errors = {};
+  if (d.name.trim().length < 2) e.name = "Informe seu nome";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())) e.email = "E-mail inválido";
+  if (d.phone.replace(/\D/g, "").length < 8) e.phone = "Informe um telefone";
+  if (d.message.trim().length < 5) e.message = "Escreva uma mensagem";
+  return e;
+}
 
 const inputClass =
   "w-full rounded-xl border border-brand-gray-900 bg-brand-graphite px-4 py-3 text-white placeholder:text-brand-gray-500 outline-none transition-colors focus:border-brand-green";
 
 export function FinalCta() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  const [errors, setErrors] = useState<Errors>({});
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    const form = ev.currentTarget;
+    const fd = new FormData(form);
+    const data = Object.fromEntries(
+      (["name", "email", "phone", "company", "message"] as Field[]).map((k) => [k, String(fd.get(k) ?? "")])
+    ) as Record<Field, string>;
+    const errs = validate(data);
+    setErrors(errs);
+    if (Object.keys(errs).length) return;
     setStatus("sending");
     try {
       const res = await fetch("/api/send-email", {
@@ -39,7 +42,7 @@ export function FinalCta() {
       });
       if (!res.ok) throw new Error();
       setStatus("sent");
-      reset();
+      form.reset();
     } catch {
       setStatus("error");
     }
@@ -64,7 +67,7 @@ export function FinalCta() {
         <Reveal direction="right" delay={0.1}>
           <AnimatePresence mode="wait">
             {status === "sent" ? (
-              <motion.div
+              <m.div
                 key="sent"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -76,11 +79,11 @@ export function FinalCta() {
                 <button onClick={() => setStatus("idle")} className="mt-2 text-sm text-brand-green underline">
                   Enviar outra mensagem
                 </button>
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.form
+              <m.form
                 key="form"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={onSubmit}
                 noValidate
                 className="space-y-4 rounded-2xl bg-brand-graphite/50 p-6 md:p-8"
               >
@@ -94,14 +97,14 @@ export function FinalCta() {
                 ).map((f) => (
                   <div key={f.name}>
                     <label htmlFor={f.name} className="sr-only">{f.label}</label>
-                    <input id={f.name} type={f.type} placeholder={f.label} {...register(f.name)} className={inputClass} />
-                    {errors[f.name] && <p className="mt-1 text-sm text-red-400">{errors[f.name]?.message}</p>}
+                    <input id={f.name} type={f.type} placeholder={f.label} name={f.name} autoComplete={f.name === "company" ? "organization" : f.name === "phone" ? "tel" : f.name} className={inputClass} />
+                    {errors[f.name] && <p className="mt-1 text-sm text-red-400">{errors[f.name]}</p>}
                   </div>
                 ))}
                 <div>
                   <label htmlFor="message" className="sr-only">Mensagem</label>
-                  <textarea id="message" rows={4} placeholder="Como podemos ajudar?" {...register("message")} className={inputClass} />
-                  {errors.message && <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>}
+                  <textarea id="message" rows={4} placeholder="Como podemos ajudar?" name="message" className={inputClass} />
+                  {errors.message && <p className="mt-1 text-sm text-red-400">{errors.message}</p>}
                 </div>
                 <button
                   type="submit"
@@ -116,7 +119,7 @@ export function FinalCta() {
                     Não foi possível enviar. Tente pelo WhatsApp.
                   </p>
                 )}
-              </motion.form>
+              </m.form>
             )}
           </AnimatePresence>
         </Reveal>

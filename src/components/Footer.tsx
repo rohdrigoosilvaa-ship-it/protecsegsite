@@ -22,7 +22,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           <div>
             <img
-              src="/logo-protecseg-reverse.png"
+              src="/logo-protecseg-reverse.webp"
               alt="ProtecSeg Segurança do Trabalho"
               width={212}
               height={118}

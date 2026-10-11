@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Cpu, MessageCircle, ShieldCheck, Users } from "lucide-react";
 import { Reveal } from "../components/Reveal";
 import { DIFFERENTIALS } from "../lib/content";
@@ -17,7 +17,7 @@ export function Differentials() {
           {DIFFERENTIALS.items.map((item, i) => {
             const Icon = icons[i];
             return (
-              <motion.div
+              <m.div
                 key={item.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -34,7 +34,7 @@ export function Differentials() {
                   <h3 className="mt-5 text-xl font-semibold">{item.title}</h3>
                   <p className="mt-2 text-brand-gray-300">{item.description}</p>
                 </div>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>

@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import { LazyMotion, domAnimation, m, useScroll, useSpring } from "framer-motion";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { WhatsAppFloat } from "./components/WhatsAppFloat";
@@ -25,8 +25,8 @@ export default function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   return (
-    <>
-      <motion.div
+    <LazyMotion features={domAnimation} strict>
+      <m.div
         style={{ scaleX }}
         className="fixed top-0 left-0 right-0 z-[60] h-1 origin-left bg-brand-green"
       />
@@ -52,6 +52,6 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppFloat />
-    </>
+    </LazyMotion>
   );
 }

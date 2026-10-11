@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Building2 } from "lucide-react";
 import { Reveal } from "../components/Reveal";
 import { ABOUT } from "../lib/content";
@@ -16,7 +16,7 @@ export function About() {
         </Reveal>
 
         <Reveal direction="right" delay={0.1}>
-          <motion.div
+          <m.div
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
             className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-brand-gray-100 shadow-xl"
@@ -26,7 +26,7 @@ export function About() {
               <Building2 size={40} />
               <span className="text-sm">[FOTO DA RECEPÇÃO]</span>
             </div>
-          </motion.div>
+          </m.div>
         </Reveal>
       </div>
     </section>

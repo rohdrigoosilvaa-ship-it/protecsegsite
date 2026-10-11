@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { NAV_LINKS, CONTACT } from "../lib/content";
 
@@ -52,7 +52,7 @@ export function Header() {
             className="relative z-50 shrink-0"
           >
             <img
-              src={open ? "/logo-protecseg-reverse.png" : "/logo-protecseg-color.png"}
+              src={open ? "/logo-protecseg-reverse.webp" : "/logo-protecseg-color.webp"}
               alt="ProtecSeg Segurança do Trabalho"
               width={115}
               height={64}
@@ -70,12 +70,11 @@ export function Header() {
                 }`}
               >
                 {link.label}
-                {active === link.id && (
-                  <motion.span
-                    layoutId="nav-underline"
-                    className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-brand-green rounded-full"
-                  />
-                )}
+                <span
+                  className={`absolute -bottom-1.5 left-0 right-0 h-0.5 origin-left rounded-full bg-brand-green transition-transform duration-300 ${
+                    active === link.id ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
               </button>
             ))}
           </nav>
@@ -103,20 +102,20 @@ export function Header() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 bg-brand-black/95 backdrop-blur-sm md:hidden"
           >
-            <motion.nav
+            <m.nav
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.1 }}
               className="flex h-full flex-col items-center justify-center gap-8 pt-16"
             >
               {NAV_LINKS.map((link, i) => (
-                <motion.button
+                <m.button
                   key={link.id}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -125,9 +124,9 @@ export function Header() {
                   className="text-2xl font-semibold text-white"
                 >
                   {link.label}
-                </motion.button>
+                </m.button>
               ))}
-              <motion.a
+              <m.a
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 + NAV_LINKS.length * 0.07 }}
@@ -137,9 +136,9 @@ export function Header() {
                 className="mt-4 rounded-full bg-brand-green px-8 py-3 text-base font-semibold text-white"
               >
                 Falar com especialista
-              </motion.a>
-            </motion.nav>
-          </motion.div>
+              </m.a>
+            </m.nav>
+          </m.div>
         )}
       </AnimatePresence>
     </>
