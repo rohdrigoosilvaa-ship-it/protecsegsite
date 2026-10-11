@@ -24,7 +24,7 @@
   --animate-spin-slower: spin 55s linear infinite reverse;
   --animate-bob: bob 2s ease-in-out infinite;
   --animate-sweep: sweep 14s ease-in-out infinite;
-  --animate-pulse-ring: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-ping-soft: ping-soft 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
   --animate-marquee: marquee 28s linear infinite;
 
   @keyframes fade-up {
@@ -57,10 +57,9 @@
     0%, 100% { transform: translate3d(-20%, 0, 0); }
     50% { transform: translate3d(20%, 0, 0); }
   }
-  @keyframes pulse-ring {
-    0% { box-shadow: 0 0 0 0 rgba(0, 167, 89, 0.45); }
-    70% { box-shadow: 0 0 0 14px rgba(0, 167, 89, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 167, 89, 0); }
+  @keyframes ping-soft {
+    0% { transform: scale(1); opacity: 0.45; }
+    80%, 100% { transform: scale(1.5); opacity: 0; }
   }
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -101,6 +100,9 @@
 .hero-enter-scale {
   opacity: 0;
   animation: hero-scale 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.whatsapp-enter {
+  animation: hero-scale 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
 }
 @keyframes hero-up {
   from { opacity: 0; transform: translateY(24px); }
