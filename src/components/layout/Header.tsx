@@ -6,7 +6,7 @@ import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { siteConfig } from "../../data/site";
 import { cn } from "../../utils/cn";
-import { useNavEntrance, useScrolledState } from "../../animations/navAnimations";
+import { useScrolledState } from "../../animations/navAnimations";
 
 function resolveHref(item: NavItem, isHome: boolean) {
   if (item.to) return item.to;
@@ -16,7 +16,6 @@ function resolveHref(item: NavItem, isHome: boolean) {
 export function Header() {
   const headerRef = useRef<HTMLElement>(null);
   const scrolled = useScrolledState(12);
-  useNavEntrance(headerRef);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();

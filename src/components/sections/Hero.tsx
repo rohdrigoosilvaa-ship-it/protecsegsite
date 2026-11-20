@@ -124,8 +124,8 @@ export function Hero() {
             <ShieldCheck className="h-20 w-20 text-[var(--color-green)]" strokeWidth={1.5} />
           </div>
 
-          {floatingChips.map((chip) => (
-            <HeroChip key={chip.label} {...chip} />
+          {floatingChips.map((chip, index) => (
+            <HeroChip key={chip.label} {...chip} index={index} />
           ))}
         </div>
       </Container>

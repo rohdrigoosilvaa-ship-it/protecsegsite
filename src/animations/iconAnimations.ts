@@ -1,5 +1,31 @@
 import { useLayoutEffect, type RefObject } from "react";
-import { gsap, prefersReducedMotion } from "./gsapConfig";
+import { prefersReducedMotion } from "./gsapConfig";
+
+// Ambient loops run on the compositor via the Web Animations API instead of
+// GSAP tweens: a JS tween writes a style every frame on the main thread, and
+// with ~30 of them on the page scroll dropped to ~20fps on mid-range phones.
+const EASE_SINE_IN_OUT = "cubic-bezier(0.37, 0, 0.63, 1)";
+
+export function startLoop(
+  el: HTMLElement,
+  from: string,
+  to: string,
+  { duration, delay = 0, easing = EASE_SINE_IN_OUT, direction = "alternate" }: {
+    duration: number;
+    delay?: number;
+    easing?: string;
+    direction?: PlaybackDirection;
+  },
+) {
+  const animation = el.animate([{ transform: from }, { transform: to }], {
+    duration: duration * 1000,
+    delay: delay * 1000,
+    easing,
+    direction,
+    iterations: Infinity,
+  });
+  return () => animation.cancel();
+}
 
 interface FloatOptions {
   delay?: number;
@@ -14,19 +40,7 @@ export function useIconFloat<T extends HTMLElement>(ref: RefObject<T | null>, op
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(el, {
-        y: -distance,
-        duration,
-        delay,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-    }, el);
-
-    return () => ctx.revert();
+    return startLoop(el, "translate3d(0, 0, 0)", `translate3d(0, ${-distance}px, 0)`, { duration, delay });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, distance, duration]);
 }
@@ -45,20 +59,7 @@ export function useFloatDrift<T extends HTMLElement>(ref: RefObject<T | null>, o
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(el, {
-        y: -y,
-        x,
-        duration,
-        delay,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-    }, el);
-
-    return () => ctx.revert();
+    return startLoop(el, "translate3d(0, 0, 0)", `translate3d(${x}px, ${-y}px, 0)`, { duration, delay });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, x, y, duration]);
 }
@@ -68,31 +69,15 @@ export function usePulse<T extends HTMLElement>(ref: RefObject<T | null>, scale 
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(el, { scale, duration, ease: "sine.inOut", repeat: -1, yoyo: true });
-    }, el);
-
-    return () => ctx.revert();
+    return startLoop(el, "scale(1)", `scale(${scale})`, { duration });
   }, [ref, scale, duration]);
 }
 
-/** One-shot wobble (rotation) for an attention/urgency icon. */
+/** Continuous gentle rotation back and forth for an attention/urgency icon. */
 export function useIconWobble<T extends HTMLElement>(ref: RefObject<T | null>, degrees = 8, duration = 2.5) {
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(el, {
-        rotate: degrees,
-        duration,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-    }, el);
-
-    return () => ctx.revert();
+    return startLoop(el, "rotate(0deg)", `rotate(${degrees}deg)`, { duration });
   }, [ref, degrees, duration]);
 }

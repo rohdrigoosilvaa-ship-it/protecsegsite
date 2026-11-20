@@ -1,5 +1,6 @@
 import { useLayoutEffect, type RefObject } from "react";
-import { EASE, gsap, prefersReducedMotion } from "./gsapConfig";
+import { gsap, prefersReducedMotion } from "./gsapConfig";
+import { startLoop } from "./iconAnimations";
 
 /**
  * Builds the Hero's cinematic entrance sequence. Elements are selected via
@@ -21,44 +22,26 @@ export function useHeroTimeline(scopeRef: RefObject<HTMLElement | null>) {
     const scope = scopeRef.current;
     if (!scope) return;
 
+    const loops: Array<() => void> = [];
     const ctx = gsap.context(() => {
       const q = (sel: string) => scope.querySelectorAll(`[data-hero="${sel}"]`);
 
-      if (prefersReducedMotion()) {
-        gsap.set(
-          [q("badge"), q("headline"), q("subtext"), scope.querySelectorAll('[data-hero="buttons"] > *'), q("graphic"), q("chip")],
-          { opacity: 1, y: 0, scale: 1 },
-        );
-        return;
-      }
-
-      const tl = gsap.timeline({ defaults: { ease: EASE.outStrong } });
-
-      tl.fromTo(q("badge"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 })
-        .fromTo(q("headline"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.25")
-        .fromTo(q("subtext"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, "-=0.35")
-        .fromTo(
-          scope.querySelectorAll('[data-hero="buttons"] > *'),
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.12 },
-          "-=0.3",
-        )
-        .fromTo(
-          q("graphic"),
-          { opacity: 0, scale: 0.9 },
-          { opacity: 1, scale: 1, duration: 0.8, ease: EASE.outExpo },
-          "-=0.45",
-        )
-        .fromTo(q("chip"), { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.08 }, "-=0.4");
-      // Note: chips' x/y are owned exclusively by their own continuous drift (useFloatDrift),
-      // so the entrance above only touches opacity to avoid both tweens fighting over transform.
+      // The entrance sequence (badge → headline → subtext → buttons → graphic →
+      // chips) is CSS in index.css so it plays from the prerendered HTML.
+      if (prefersReducedMotion()) return;
 
       // Continuous ambient motion, independent of the entrance sequence.
-      gsap.to(q("ring"), { rotate: 360, duration: 40, ease: "none", repeat: -1 });
-      gsap.to(q("pulse"), { scale: 1.06, duration: 4, ease: "sine.inOut", repeat: -1, yoyo: true });
-      gsap.to(q("blob"), { x: -30, y: 20, duration: 14, ease: "sine.inOut", repeat: -1, yoyo: true });
+      const els = (sel: string) => Array.from(q(sel)) as HTMLElement[];
+      for (const el of els("ring"))
+        loops.push(startLoop(el, "rotate(0deg)", "rotate(360deg)", { duration: 40, easing: "linear", direction: "normal" }));
+      for (const el of els("pulse")) loops.push(startLoop(el, "scale(1)", "scale(1.06)", { duration: 4 }));
+      for (const el of els("blob"))
+        loops.push(startLoop(el, "translate3d(0, 0, 0)", "translate3d(-30px, 20px, 0)", { duration: 14 }));
     }, scope);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      loops.forEach((stop) => stop());
+    };
   }, [scopeRef]);
 }

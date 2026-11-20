@@ -1,6 +1,6 @@
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../ui/SectionHeader";
-import { ContactForm } from "../sections/ContactForm";
+import { LazyContactForm as ContactForm } from "../sections/LazyContactForm";
 
 export function AcademyFinalCta() {
   return (

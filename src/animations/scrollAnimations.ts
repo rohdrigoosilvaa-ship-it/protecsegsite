@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import { EASE, ScrollTrigger, gsap, isMobileViewport, prefersReducedMotion } from "./gsapConfig";
+import { EASE, ScrollTrigger, gsap, isMobileViewport, prefersReducedMotion, wasPaintedByServer } from "./gsapConfig";
 
 interface FadeUpOptions {
   delay?: number;
@@ -11,7 +11,7 @@ interface FadeUpOptions {
 export function animateFadeUp(el: Element, options: FadeUpOptions = {}) {
   const { delay = 0, y = 30, duration = 0.7, start = "top 80%" } = options;
 
-  if (prefersReducedMotion()) {
+  if (prefersReducedMotion() || wasPaintedByServer(el)) {
     gsap.set(el, { opacity: 1, y: 0 });
     return () => {};
   }
@@ -68,7 +68,7 @@ export function useScaleReveal<T extends HTMLElement>(options: ScaleFadeOptions 
     const el = ref.current;
     if (!el) return;
 
-    if (prefersReducedMotion()) {
+    if (prefersReducedMotion() || wasPaintedByServer(el)) {
       gsap.set(el, { opacity: 1, scale: 1 });
       return;
     }

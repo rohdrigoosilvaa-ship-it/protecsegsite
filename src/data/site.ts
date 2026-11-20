@@ -23,6 +23,6 @@ export const siteConfig = {
   logo: {
     // logo-color: para fundos claros. logo-reverse: para fundos escuros (verde institucional/preto).
     light: "/assets/logo/logo-color.png",
-    dark: "/assets/logo/logo-reverse.png",
+    dark: "/assets/logo/logo-reverse.webp",
   },
 } as const;

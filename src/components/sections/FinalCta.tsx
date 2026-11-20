@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { Container } from "../ui/Container";
 import { SectionHeader } from "../ui/SectionHeader";
-import { ContactForm } from "./ContactForm";
+import { LazyContactForm as ContactForm } from "./LazyContactForm";
 import { siteConfig } from "../../data/site";
 import { useScrollReveal } from "../../animations/scrollAnimations";
 

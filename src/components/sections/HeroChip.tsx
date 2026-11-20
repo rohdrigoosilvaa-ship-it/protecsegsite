@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { useFloatDrift } from "../../animations/iconAnimations";
 
@@ -9,6 +9,7 @@ export function HeroChip({
   duration,
   range,
   delay,
+  index,
 }: {
   label: string;
   icon: LucideIcon;
@@ -16,6 +17,7 @@ export function HeroChip({
   duration: number;
   range: number;
   delay: number;
+  index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useFloatDrift(ref, { delay, y: range, x: range / 3, duration });
@@ -24,6 +26,7 @@ export function HeroChip({
     <div
       ref={ref}
       data-hero="chip"
+      style={{ "--ps-chip-index": index } as CSSProperties}
       className={`absolute flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-sm ${className}`}
     >
       <Icon className="h-3.5 w-3.5 text-[var(--color-green)]" />
