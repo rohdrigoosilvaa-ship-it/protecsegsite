@@ -1,57 +1,39 @@
-import { LazyMotion, domAnimation, m, useScroll, useSpring } from "framer-motion";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
-import { WhatsAppFloat } from "./components/WhatsAppFloat";
-import { Hero } from "./sections/Hero";
-import { Problem } from "./sections/Problem";
-import { Solution } from "./sections/Solution";
-import { TraditionalVsDigital } from "./sections/TraditionalVsDigital";
-import { ProtecsegDigital } from "./sections/ProtecsegDigital";
-import { Method } from "./sections/Method";
-import { Culture } from "./sections/Culture";
-import { Innovation } from "./sections/Innovation";
-import { Segments } from "./sections/Segments";
-import { Differentials } from "./sections/Differentials";
-import { About } from "./sections/About";
-import { Leadership } from "./sections/Leadership";
-import { NotJustDocuments } from "./sections/NotJustDocuments";
-import { SocialProof } from "./sections/SocialProof";
-import { Blog } from "./sections/Blog";
-import { Faq } from "./sections/Faq";
-import { FinalCta } from "./sections/FinalCta";
+import { AnimatePresence, motion } from "framer-motion";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { Header } from "./components/layout/Header";
+import { Footer } from "./components/layout/Footer";
+import { WhatsAppButton } from "./components/layout/WhatsAppButton";
+import { ScrollProgressBar } from "./components/ui/ScrollProgressBar";
+import { HomePage } from "./pages/HomePage";
+import { AcademyPage } from "./pages/AcademyPage";
 
-export default function App() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+function App() {
+  const location = useLocation();
 
   return (
-    <LazyMotion features={domAnimation} strict>
-      <m.div
-        style={{ scaleX }}
-        className="fixed top-0 left-0 right-0 z-[60] h-1 origin-left bg-brand-green"
-      />
+    <>
+      <ScrollProgressBar />
       <Header />
       <main>
-        <Hero />
-        <Problem />
-        <Solution />
-        <TraditionalVsDigital />
-        <ProtecsegDigital />
-        <Method />
-        <Culture />
-        <Innovation />
-        <Segments />
-        <Differentials />
-        <About />
-        <Leadership />
-        <NotJustDocuments />
-        <SocialProof />
-        <Blog />
-        <Faq />
-        <FinalCta />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <Routes location={location}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/protechub" element={<AcademyPage />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
       </main>
       <Footer />
-      <WhatsAppFloat />
-    </LazyMotion>
+      <WhatsAppButton />
+    </>
   );
 }
+
+export default App;
