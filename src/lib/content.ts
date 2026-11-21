@@ -1,11 +1,19 @@
 export const CONTACT = {
   whatsapp: "5511992730356",
   whatsappDisplay: "(11) 99273-0356",
-  email: "protecseg21@gmail.com",
+  email: "protecseg@protecsegconsultoria.com.br",
   location: "São Paulo - SP",
-  instagram: "https://instagram.com/protecseg", // TODO: confirmar URL real
-  linkedin: "https://linkedin.com/company/protecseg", // TODO: confirmar URL real
+  instagram: "https://www.instagram.com/protecsegconsultoria",
+  linkedin: "https://www.linkedin.com/company/protecseg",
+  booking: "https://calendar.app.google/HwVg6aNCfqtJfuvZ8",
 };
+
+/** Vai para a seção na home; em outras páginas, abre a home já na seção. */
+export function goToSection(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  else window.location.href = id === "hero" ? "/" : `/#${id}`;
+}
 
 export const NAV_LINKS = [
   { id: "solucao", label: "Solução" },

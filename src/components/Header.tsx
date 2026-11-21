@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, m } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { NAV_LINKS, CONTACT } from "../lib/content";
+import { NAV_LINKS, CONTACT, goToSection } from "../lib/content";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,7 +35,7 @@ export function Header() {
 
   const scrollTo = (id: string) => {
     setOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    goToSection(id);
   };
 
   return (

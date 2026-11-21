@@ -1,5 +1,6 @@
 import { Mail, MapPin, MessageCircle } from "lucide-react";
-import { CONTACT, NAV_LINKS } from "../lib/content";
+import { CONTACT, NAV_LINKS, goToSection } from "../lib/content";
+import { SERVICE_LIST } from "../lib/services";
 
 const Instagram = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -40,15 +41,28 @@ export function Footer() {
               {NAV_LINKS.map((link) => (
                 <li key={link.id}>
                   <button
-                    onClick={() =>
-                      document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth" })
-                    }
+                    onClick={() => goToSection(link.id)}
                     className="hover:text-brand-green transition-colors"
                   >
                     {link.label}
                   </button>
                 </li>
               ))}
+            </ul>
+            <p className="font-semibold mt-8 mb-4">Serviços</p>
+            <ul className="space-y-2 text-sm text-brand-gray-300">
+              {SERVICE_LIST.map((s) => (
+                <li key={s.slug}>
+                  <a href={`/${s.slug}`} className="hover:text-brand-green transition-colors">
+                    {s.navLabel}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href={CONTACT.booking} target="_blank" rel="noopener noreferrer" className="hover:text-brand-green transition-colors">
+                  Diagnóstico gratuito
+                </a>
+              </li>
             </ul>
           </div>
 

@@ -2,12 +2,12 @@ import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import "@fontsource-variable/inter/wght.css";
 import "./index.css";
-import App from "./App.tsx";
+import { Root } from "./Root.tsx";
 
 const container = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <App />
+    <Root page={container.dataset.page} />
   </StrictMode>
 );
 
