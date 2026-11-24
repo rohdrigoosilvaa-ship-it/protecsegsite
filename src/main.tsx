@@ -21,8 +21,11 @@ const app = (
   </StrictMode>
 )
 
-// Only "/" is prerendered; any other route served the same HTML renders fresh.
-if (window.location.pathname === '/' && container.hasChildNodes()) {
+// Hydrate only when the HTML was prerendered for this exact route; any other
+// route served a fallback HTML renders fresh.
+const prerenderedPath = container.dataset.prerenderedPath
+const currentPath = window.location.pathname.replace(/\/+$/, '') || '/'
+if (prerenderedPath === currentPath && container.hasChildNodes()) {
   document.documentElement.dataset.psPrerendered = '1'
   hydrateRoot(container, app)
 }

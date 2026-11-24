@@ -6,6 +6,7 @@ import { Footer } from "./components/layout/Footer";
 import { WhatsAppButton } from "./components/layout/WhatsAppButton";
 import { ScrollProgressBar } from "./components/ui/ScrollProgressBar";
 import { HomePage } from "./pages/HomePage";
+import { Protec360Page } from "./pages/Protec360Page";
 import { preloadContactForm } from "./components/sections/LazyContactForm";
 
 const AcademyPage = lazy(() => import("./pages/AcademyPage").then((m) => ({ default: m.AcademyPage })));
@@ -35,6 +36,7 @@ function App() {
           >
             <Routes location={location}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/protec360" element={<Protec360Page />} />
               <Route
                 path="/protechub"
                 element={

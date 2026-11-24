@@ -13,6 +13,8 @@
   --color-green-darker: #004026;
   --color-green-light: #f0faf5;
   --color-green-100: #d6f2e4;
+  /* Verde de destaque sobre superfícies institucionais (contraste ≥ 3:1 em texto grande) */
+  --color-green-bright: #6fdc9b;
 
   /* Verde institucional — substitui preto puro como superfície escura de marca (Hero, CTA) */
   --color-institutional: #00663d;

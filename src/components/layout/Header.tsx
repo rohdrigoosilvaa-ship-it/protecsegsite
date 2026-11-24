@@ -35,8 +35,9 @@ export function Header() {
   }, [location.pathname]);
 
   const goToContact = () => {
-    if (isHome) {
-      document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
+    const contact = document.getElementById("contato");
+    if (contact) {
+      contact.scrollIntoView({ behavior: "smooth" });
     } else if (isAcademy) {
       navigate("/protechub#contato-academy");
     } else {
