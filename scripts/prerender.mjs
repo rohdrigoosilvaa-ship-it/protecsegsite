@@ -12,7 +12,9 @@ const canonical = template.match(/<link\s+rel="canonical"\s+href="([^"]*)"/)?.[1
 const origin = canonical.replace(/\/+$/, "");
 
 for (const page of pages) {
-  let html = template.replace(marker, `<div id="root" data-prerendered-path="${page.path}">${render(page.path)}</div>`);
+  let html = page.shell
+    ? template
+    : template.replace(marker, `<div id="root" data-prerendered-path="${page.path}">${render(page.path)}</div>`);
   if (page.title) {
     html = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeAttr(page.title)}</title>`);
     html = html.replace(/(<meta\s+property="og:title"\s+content=")[^"]*(")/, `$1${escapeAttr(page.title)}$2`);

@@ -1,8 +1,15 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/metodo-protecseg",
-      "destination": "/metodo-protecseg/index.html"
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/protechub",
+      "destination": "/protechub/index.html"
     },
     {
       "source": "/(.*)",

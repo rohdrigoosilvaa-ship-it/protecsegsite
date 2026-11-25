@@ -7,11 +7,11 @@ export interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { label: "Empresa", hash: "sobre" },
-  { label: "Soluções", hash: "solucoes" },
-  { label: "ProtecOne", hash: "protecone" },
+  { label: "O método", hash: "metodo" },
+  { label: "Como funciona", hash: "como-funciona" },
+  { label: "O que você recebe", hash: "entregas" },
   { label: "ProtecHub", to: "/protechub" },
   { label: "Planos", hash: "planos" },
-  { label: "Diferenciais", hash: "diferenciais" },
+  { label: "Dúvidas", hash: "duvidas" },
   { label: "Contato", hash: "contato" },
 ];

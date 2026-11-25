@@ -4,7 +4,7 @@ export const WHATSAPP_URL = `https://wa.me/5511992730356?text=${encodeURICompone
   "Olá! Vim pelo site e quero um diagnóstico de SST da minha empresa.",
 )}`;
 
-export const PAGE_PATH = "/metodo-protecseg";
+export const PAGE_PATH = "/";
 export const PAGE_TITLE = "Consultoria em Segurança do Trabalho em São Paulo | PGR, PCMSO e NR-01 · ProtecSeg";
 export const PAGE_DESCRIPTION =
   "PGR, PCMSO, NR-01, treinamentos e eSocial em dia com o Método ProtecSeg: equipe técnica em São Paulo e plataforma que avisa antes de vencer. Planos mensais.";
@@ -127,7 +127,7 @@ export const CONTACT = {
 };
 
 export function structuredData(siteOrigin: string) {
-  const pageUrl = `${siteOrigin}${PAGE_PATH}`;
+  const pageUrl = `${siteOrigin}/`;
   return [
     {
       "@context": "https://schema.org",

@@ -117,7 +117,7 @@
   }
 }
 
-/* Header + hero entrance, mirroring the original GSAP timelines (same order,
+/* Header entrance, mirroring the original GSAP timeline (same order,
    durations, offsets and easings). As CSS it plays from the prerendered HTML
    without waiting for JavaScript. */
 @keyframes ps-enter {
@@ -125,9 +125,6 @@
     opacity: 0;
     transform: translate3d(0, var(--ps-enter-y, 0px), 0) scale(var(--ps-enter-scale, 1));
   }
-}
-@keyframes ps-fade-in {
-  from { opacity: 0; }
 }
 @media (prefers-reduced-motion: no-preference) {
   [data-nav="logo"],
@@ -145,27 +142,6 @@
   [data-nav="link"]:nth-child(6) { animation-delay: 0.55s; }
   [data-nav="link"]:nth-child(7) { animation-delay: 0.61s; }
   [data-nav="cta"] { animation-delay: 0.86s; }
-
-  [data-hero="badge"],
-  [data-hero="headline"],
-  [data-hero="subtext"],
-  [data-hero="buttons"] > * {
-    animation: ps-enter 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) both;
-  }
-  [data-hero="badge"] { --ps-enter-y: 16px; }
-  [data-hero="headline"] { --ps-enter-y: 40px; animation-duration: 0.7s; animation-delay: 0.25s; }
-  [data-hero="subtext"] { --ps-enter-y: 20px; animation-duration: 0.6s; animation-delay: 0.6s; }
-  [data-hero="buttons"] > * { --ps-enter-y: 16px; }
-  [data-hero="buttons"] > :nth-child(1) { animation-delay: 0.9s; }
-  [data-hero="buttons"] > :nth-child(2) { animation-delay: 1.02s; }
-  [data-hero="graphic"] {
-    --ps-enter-scale: 0.9;
-    animation: ps-enter 0.8s cubic-bezier(0.19, 1, 0.22, 1) 1.07s both;
-  }
-  [data-hero="chip"] {
-    animation: ps-fade-in 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) both;
-    animation-delay: calc(1.47s + var(--ps-chip-index, 0) * 0.08s);
-  }
 }
 
 @layer utilities {
