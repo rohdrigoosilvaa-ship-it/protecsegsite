@@ -6,6 +6,8 @@ import { Footer } from "./components/layout/Footer";
 import { WhatsAppButton } from "./components/layout/WhatsAppButton";
 import { ScrollProgressBar } from "./components/ui/ScrollProgressBar";
 import { HomePage } from "./pages/HomePage";
+import { MetodoPage } from "./pages/metodo/MetodoPage";
+import { PAGE_PATH as METODO_PATH } from "./pages/metodo/content";
 import { preloadContactForm } from "./components/sections/LazyContactForm";
 
 const AcademyPage = lazy(() => import("./pages/AcademyPage").then((m) => ({ default: m.AcademyPage })));
@@ -15,10 +17,13 @@ function App() {
 
   useEffect(() => {
     const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1500));
-    idle(() => preloadContactForm());
+    if (window.location.pathname.replace(/\/+$/, "") !== METODO_PATH) idle(() => preloadContactForm());
     // Child layout effects of the hydration pass have run by now.
     delete document.documentElement.dataset.psPrerendered;
   }, []);
+
+  // A página do Método tem menu, rodapé e botão de WhatsApp próprios.
+  if (location.pathname.replace(/\/+$/, "") === METODO_PATH) return <MetodoPage />;
 
   return (
     <>

@@ -3,9 +3,11 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import '@fontsource/lato/latin-400.css'
 import '@fontsource/lato/latin-700.css'
+import '@fontsource/montserrat/latin-500.css'
 import '@fontsource/montserrat/latin-600.css'
 import '@fontsource/montserrat/latin-700.css'
 import '@fontsource/montserrat/latin-800.css'
+import '@fontsource/montserrat/latin-800-italic.css'
 import '@fontsource/open-sans/latin-400.css'
 import '@fontsource/open-sans/latin-500.css'
 import '@fontsource/open-sans/latin-600.css'
@@ -21,8 +23,10 @@ const app = (
   </StrictMode>
 )
 
-// Only "/" is prerendered; any other route served the same HTML renders fresh.
-if (window.location.pathname === '/' && container.hasChildNodes()) {
+// Hydrate only when the HTML was prerendered for this exact route; any other
+// route served a fallback HTML renders fresh.
+const currentPath = window.location.pathname.replace(/\/+$/, '') || '/'
+if (container.dataset.prerenderedPath === currentPath && container.hasChildNodes()) {
   document.documentElement.dataset.psPrerendered = '1'
   hydrateRoot(container, app)
 }
